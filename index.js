@@ -12,5 +12,5 @@ app.use(cookieParser());
 app.use(authRoutes);
 
 // DB CONNECTION AND SETTING UP SERVER
-const port = 8081;
+const port = 8000;
 app.listen(port, () => console.log(`App is Running @ ${port}`));
