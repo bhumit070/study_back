@@ -3,10 +3,10 @@ const mysql = require("mysql");
 exports.db = () => {
   try {
     const connection = mysql.createConnection({
-      host: "localhost1",
-      user: "root",
-      password: "incipient",
-      database: "db_school",
+      host: process.env.host,
+      user: process.env.USERDB,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
     });
     connection.connect((error) => {
       if (error) {
