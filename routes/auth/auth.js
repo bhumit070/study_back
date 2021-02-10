@@ -7,8 +7,8 @@ const {
   signin,
   isSignedIn,
   verifyUser,
-  isAuthenticated,
-} = require("../controllers/auth");
+  isAdmin,
+} = require("../../controllers/auth/auth");
 
 router.post(
   "/signup",
@@ -33,6 +33,16 @@ router.post(
   signin
 );
 
-router.post("/user/verify", isSignedIn, isAuthenticated, verifyUser);
+router.post(
+  "/user/verify",
+  [
+    check("id", "No id found in the request")
+      .isLength({ min: 1, max: 1000 })
+      .isNumeric(),
+  ],
+  isSignedIn,
+  isAdmin,
+  verifyUser
+);
 
 module.exports = router;

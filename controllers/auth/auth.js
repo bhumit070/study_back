@@ -1,9 +1,8 @@
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
-const connection = require("../db");
+const connection = require("../../db");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-
 const secret = Buffer.from(process.env.SECRET).toString("base64");
 
 exports.signup = async (req, res) => {
@@ -115,11 +114,11 @@ exports.verifyUser = (req, res) => {
   console.log(req.auth);
   const { id } = req.body;
   const verifyUserQuery = `UPDATE tbl_user SET is_verified = '1' WHERE user_id = ${id}`;
-  connection.db().query(verifyUserQuery, (error) => {
-    if (error) {
+  connection.db().query(verifyUserQuery, (error, result) => {
+    if (error || result.affectedRows === 0) {
       return res.json({
         isError: true,
-        message: "Unalbe to verify User",
+        message: "Error in Verifying User",
         error: error,
       });
     } else {
@@ -132,7 +131,14 @@ exports.verifyUser = (req, res) => {
   });
 };
 
-exports.isAuthenticated = (req, res, next) => {
+exports.isAdmin = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.json({
+      isError: true,
+      message: errors.array()[0].msg,
+    });
+  }
   if (req.auth.role !== 1) {
     return res.json({
       isError: true,
