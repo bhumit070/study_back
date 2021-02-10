@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const secret = Buffer.from(process.env.SECRET).toString("base64");
 
+//SIGNUP
 exports.signup = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -50,6 +51,7 @@ exports.signup = async (req, res) => {
   }
 };
 
+//SIGNIN
 exports.signin = (req, res) => {
   try {
     const errors = validationResult(req);
@@ -104,12 +106,14 @@ exports.signin = (req, res) => {
   }
 };
 
+//CHECK WEATHER SIGNED IN OR NOT
 exports.isSignedIn = expressJwt({
   secret,
   userProperty: "auth",
   algorithms: ["HS256"],
 });
 
+//VERIFY SIFGNEDUP USER
 exports.verifyUser = (req, res) => {
   console.log(req.auth);
   const { id } = req.body;
@@ -131,6 +135,7 @@ exports.verifyUser = (req, res) => {
   });
 };
 
+//CHECK WEATHER ADMIN OR NOT
 exports.isAdmin = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

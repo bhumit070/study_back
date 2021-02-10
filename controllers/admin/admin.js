@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const connection = require("../../db");
 
+//CREATE CATEGORY
 exports.createCategory = (req, res) => {
   try {
     const errors = validationResult(req);
@@ -35,6 +36,7 @@ exports.createCategory = (req, res) => {
   }
 };
 
+//CREATE SUBCATEGORY
 exports.createSubCategory = (req, res) => {
   try {
     const errors = validationResult(req);
@@ -78,4 +80,24 @@ exports.createSubCategory = (req, res) => {
       error,
     });
   }
+};
+
+//GET CATEGORY BY ID
+exports.getCategoryById = (req, res) => {
+  const id = req.body;
+  const getCategoryQuery = `select cat_name from tbl_category where cat_id=${cat_id}`;
+  connection.db().query(getCategoryQuery, (error, result) => {
+    if (error || result.length <= 0) {
+      return res.json({
+        isError: true,
+        message: "No Category Found",
+        error,
+      });
+    } else {
+      return res.json({
+        isError: false,
+        data: result,
+      });
+    }
+  });
 };

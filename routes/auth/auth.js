@@ -10,6 +10,7 @@ const {
   isAdmin,
 } = require("../../controllers/auth/auth");
 
+//SIGNUP
 router.post(
   "/signup",
   [
@@ -22,6 +23,7 @@ router.post(
   signup
 );
 
+//SIGNIN
 router.post(
   "/signin",
   [
@@ -33,6 +35,7 @@ router.post(
   signin
 );
 
+//VERIFYING USER BY ADMIN
 router.post(
   "/user/verify",
   [

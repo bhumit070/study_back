@@ -8,6 +8,7 @@ const {
 } = require("../../controllers/admin/admin");
 const { isAdmin, isSignedIn } = require("../../controllers/auth/auth");
 
+//CREATE CATEGORY
 router.post(
   "/create/category",
   [
@@ -20,6 +21,7 @@ router.post(
   createCategory
 );
 
+//CREATE SUBCATEGORY
 router.post(
   "/create/subcategory",
   [
@@ -35,4 +37,6 @@ router.post(
   createSubCategory
 );
 
+//GET CATEGORY BY ID
+router.post("/category");
 module.exports = router;
