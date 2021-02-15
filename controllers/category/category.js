@@ -252,3 +252,22 @@ exports.getSubCategoriesByCategoryId = (req, res) => {
     }
   });
 };
+
+exports.removeSubCategory = (req, res) => {
+  const { id } = req.body;
+  const removeSubCategoryQuery = `delete from tbl_sub_category where sub_cat_id=${id}`;
+  connection.db().query(removeSubCategoryQuery, (error) => {
+    if (error) {
+      return res.json({
+        isError: true,
+        message: "Unable to delete category",
+        error,
+      });
+    } else {
+      return res.json({
+        isError: false,
+        message: "Category Deleted Successfully",
+      });
+    }
+  });
+};
