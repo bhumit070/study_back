@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 //ROUTE IMPORTS
 const authRoutes = require("./routes/auth/auth");
 const categoryRoutes = require("./routes/category/category");
+const userRoutes = require("./routes/users/user");
 
 //CONFIGS
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.use(
 //ROUTES
 app.use("/api", authRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", userRoutes);
 
 // SETTING UP SERVER
 const port = 8000;

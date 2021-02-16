@@ -7,7 +7,6 @@ const secret = Buffer.from(process.env.SECRET).toString("base64");
 
 //SIGNUP
 exports.signup = async (req, res) => {
-  console.log(req.body);
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -117,20 +116,19 @@ exports.isSignedIn = expressJwt({
 
 //VERIFY SIFGNEDUP USER
 exports.verifyUser = (req, res) => {
-  console.log(req.auth);
-  const { id } = req.body;
-  const verifyUserQuery = `UPDATE tbl_user SET is_verified = '1' WHERE user_id = ${id}`;
+  const { id, status } = req.body;
+  const verifyUserQuery = `UPDATE tbl_user SET is_verified = ${status} WHERE user_id = ${id}`;
   connection.db().query(verifyUserQuery, (error, result) => {
     if (error || result.affectedRows === 0) {
       return res.json({
         isError: true,
-        message: "Error in Verifying User",
+        message: `Error in ${status == 0 ? "Unverifying" : "Verifying"} User`,
         error: error,
       });
     } else {
       return res.json({
         isError: false,
-        message: "User Verified Successfully!",
+        message: `User ${status == 0 ? "Unverified" : "Verified"} Successfully`,
         error: error,
       });
     }
